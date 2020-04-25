@@ -54,7 +54,7 @@ SKSEMessagingInterface* g_messaging = nullptr;
 `g_messaging`为此插件的消息队列接口(`SKSEMessagingInterface`), 应初始化值为`nullptr`(空指针).
 
 在函数`SKSEPlugin_Query`末尾语句前添加如下代码:
-···C++
+```C++
 g_messaging = static_cast<SKSEMessagingInterface*>(a_skse->QueryInterface(kInterface_Messaging));
 ```
 通过`a_skse`成员函数`QueryInterface`获取`kInterface_Messaging`接口(消息队列), 并将其返回值**静态类型转换**为`SKSEMessaginInterface*`. 将结果储存于`g_messaging`后便可使用该对象.

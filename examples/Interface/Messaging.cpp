@@ -8,9 +8,9 @@
 
 namespace
 {
-    PluginHandle 		        g_thisPlugin 	= kPluginHandle_Invalid;
-    SKSEMessagingInterface* 	g_messaging 	= nullptr;
-	
+    PluginHandle                g_thisPlugin    = kPluginHandle_Invalid;
+    SKSEMessagingInterface*     g_messaging     = nullptr;
+    
     void MessageHandler(SKSEMessagingInterface::Message* a_msg)
     {
         if (a_msg->type == SKSEMessagingInterface::kMessage_DataLoaded) {
@@ -33,7 +33,7 @@ extern "C"
         a_info->infoVersion = PluginInfo::kInfoVersion;
         a_info->name = "PluginTemplate";
         a_info->version = 1;
-    	
+        
         g_thisPlugin = a_skse->GetPluginHandle();
 
         if (a_skse->isEditor) {
@@ -47,7 +47,7 @@ extern "C"
 
             return false;
         }
-    	
+        
         g_messaging = static_cast<SKSEMessagingInterface*>(a_skse->QueryInterface(kInterface_Messaging));
 
         return true;
@@ -57,7 +57,7 @@ extern "C"
     bool SKSEPlugin_Load(const SKSEInterface* a_skse)
     {
         _MESSAGE("PluginTemplate loaded");
-    	
+        
         _MESSAGE("Hello SKSE64 !");
 
         if (g_messaging->RegisterListener(g_thisPlugin, "SKSE", MessageHandler)) {
@@ -67,7 +67,7 @@ extern "C"
 
             return false;
         }
-    	
+        
         return true;
     }
 }
