@@ -1,5 +1,5 @@
 # 开发环境
-##### [上一节: 已达首页!](/docs/Setup.md) | [回到目录](../README.md) | [下一节: 示例插件](/docs/PluginTemplate.md)
+##### [回到目录](../README.md) | [开发环境](/docs/Setup.md) | [示例插件](/docs/PluginTemplate.md) | [常用方法](/docs/CommonMethods.md) | [版本集成](/docs/AddressLibrary.md) | [探索未知](/docs/ToUnknown.md) | [CommonLibSSE](/docs/CommonLibSSE.md)
 
 ## 工具
 
@@ -64,9 +64,9 @@ iVSyncPresentInterval=1
 
 > 如果使用MO2:  
 > 在MO2新建一个档案(复制已有档案)用于调试插件.  
->![MO2AddProfile](../images/mo2_addprof.png)  
+>![MO2AddProfile](/images/mo2_addprof.png)  
 > 使用BethINI时将路径设置到MO2的新档案路径再进行配置.  
->![BethINIRedirect](../images/bini_red.png)
+>![BethINIRedirect](/images/bini_red.png)
 
 ***
-##### [上一节: 已达首页!](/docs/Setup.md) | [回到目录](../README.md) | [下一节: 示例插件](/docs/PluginTemplate.md)
+##### [回到目录](../README.md) | [开发环境](/docs/Setup.md) | [示例插件](/docs/PluginTemplate.md) | [常用方法](/docs/CommonMethods.md) | [版本集成](/docs/AddressLibrary.md) | [探索未知](/docs/ToUnknown.md) | [CommonLibSSE](/docs/CommonLibSSE.md)

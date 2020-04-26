@@ -1,8 +1,8 @@
 # 常用方法->插件接口->消息队列
-#####  [常用方法](/docs/CommonMethods.md) | [消息队列](/docs/CM/Interface/Messaging.md) | [Papyrus对象](/docs/CM/Interface/Object.md) | [Papyrus脚本](/docs/CM/Interface/Papyrus.md) | [Scaleform界面](/docs/CM/Interface/Scaleform.md) | [序列化](/docs/CM/Interface/Serialization.md) | [代理委托](/docs/CM/Interface/Task.md)
+#####  [回到上层](/docs/CM/Interface.md) | [消息队列](/docs/CM/Interface/Messaging.md) | [Papyrus对象](/docs/CM/Interface/Object.md) | [Papyrus脚本](/docs/CM/Interface/Papyrus.md) | [Scaleform界面](/docs/CM/Interface/Scaleform.md) | [序列化](/docs/CM/Interface/Serialization.md) | [代理委托](/docs/CM/Interface/Task.md)
 
 SKSE64在加载过程中会根据当前状态广播对应消息, 这个过程通过消息队列接口`SKSEMessagingInterface`实现. 如果希望收到特定消息以执行特定的操作, 应当以自身句柄注册消息队列.  
-![InterfaceMessaging](..images/intrfc_messaging.png)
+![InterfaceMessaging](/images/intrfc_messaging.png)
 
 以下示例如何为示例插件项目`PluginTemplate`注册消息队列, 并在收到特定消息后打印日志.
 
@@ -48,4 +48,4 @@ if (g_messaging->RegisterListener(g_thisPlugin, "SKSE", MessageHandler)) {
 若期望聆听来自其它插件的消息, 或广播消息至注册的聆听者
 
 ***
-#####  [常用方法](/docs/CommonMethods.md) | [消息队列](/docs/CM/Interface/Messaging.md) | [Papyrus对象](/docs/CM/Interface/Object.md) | [Papyrus脚本](/docs/CM/Interface/Papyrus.md) | [Scaleform界面](/docs/CM/Interface/Scaleform.md) | [序列化](/docs/CM/Interface/Serialization.md) | [代理委托](/docs/CM/Interface/Task.md)
+#####  [回到上层](/docs/CM/Interface.md) | [消息队列](/docs/CM/Interface/Messaging.md) | [Papyrus对象](/docs/CM/Interface/Object.md) | [Papyrus脚本](/docs/CM/Interface/Papyrus.md) | [Scaleform界面](/docs/CM/Interface/Scaleform.md) | [序列化](/docs/CM/Interface/Serialization.md) | [代理委托](/docs/CM/Interface/Task.md)

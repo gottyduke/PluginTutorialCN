@@ -44,4 +44,4 @@ for 上古卷轴5: 天际特别版 (SKSE64) - 持续施工中
 
 Special thanks to Ryan and SKSE devs, all of these won't ever be possible without their work.
 
-感谢射大师(T-Avatar)的帮助和解惑.
+感谢射大师(T-Avatar)的帮助.

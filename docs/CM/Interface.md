@@ -1,5 +1,5 @@
 # 常用方法->插件接口
-##### [回到上层](/docs/CommonMethods.md)
+##### [回到上层](/docs/CommonMethods.md) | [插件接口](/docs/CM/Interface.md) | [响应事件](/docs/CM/Event.md) | [游戏数据](/docs/CM/Data.md) | [内存挂钩](/docs/CM/Hook.md)
 
 ## 接口目录
 
@@ -31,43 +31,56 @@ namespace
 
 ## 插件句柄
 
-在匿名空间内添加如下代码:
+在匿名空间内声明接口:
 ```C++
 PluginHandle g_thisPlugin = kPluginHandle_Invalid;
 ```
 `g_thisPlugin`为此插件的句柄(`PluginHandle`), 应初始化值为`kPluginHandle_Invalid`.
 
-在函数`SKSEPlugin_Query`末尾语句`return true;`前添加如下代码: 
+在函数`SKSEPlugin_Query`内获取插件句柄: 
 ```C++
 g_thisPlugin = a_skse->GetPluginHandle();
 ```
 函数`GetPluginHandle`的返回值便是当前插件的句柄, 应将其储存于预先声明的插件句柄`g_thisPlugin`中.
 
-不应在函数`SKSEPlugin_Query`或函数`SKSEPlugin_Load`以外尝试使用`GetPluginHandle`; 否则返回值无效.
+不应在函数`SKSEPlugin_Query`或函数`SKSEPlugin_Load`以外使用`GetPluginHandle`; 否则返回值无效.
 
 ## 获取接口
 
-以消息队列接口`SKSEMessagingInterface`为例, 在匿名空间内添加如下代码: 
+以消息队列接口`SKSEMessagingInterface`为例, 在匿名空间内声明接口并初始化为空指针: 
 ```C++
 SKSEMessagingInterface* g_messaging = nullptr;
 ```
 `g_messaging`为此插件的消息队列接口(`SKSEMessagingInterface`), 应初始化值为`nullptr`(空指针).
 
-在函数`SKSEPlugin_Query`末尾语句前添加如下代码:
+在函数`SKSEPlugin_Query`内获取接口实例:
 ```C++
 g_messaging = static_cast<SKSEMessagingInterface*>(a_skse->QueryInterface(kInterface_Messaging));
 ```
 通过`a_skse`成员函数`QueryInterface`获取`kInterface_Messaging`接口(消息队列), 并将其返回值**静态类型转换**为`SKSEMessaginInterface*`. 将结果储存于`g_messaging`后便可使用该对象.
 
-期望使用其它接口时, 依此示例获取值后通过类型转换获取相应对象..
-+ `SKSEMessagingInterface`->`kInterface_Messaging`
-+ `SKSEObjectInterface`->`kInterface_Object`
-+ `SKSEPapyrusInterface`->`kInterface_Papyrus`
-+ `SKSEScaleformInterface`->`kInterface_Scaleform`
-+ `SKSESerializationInterface`->`kInterface_Serialization`
-+ `SKSETaskInterface`->`kInterface_Task`
+期望使用其它接口时, 依此示例获取值后通过类型转换获取相应对象:
+在匿名空间内声明接口并初始化为空指针:
+```C++
+SKSEMessagingInterface*	g_messaging	= nullptr;
+SKSEObjectInterface* g_object = nullptr;
+SKSEPapyrusInterface* g_papyrus = nullptr;
+SKSEScaleformInterface*	g_scaleform	= nullptr;
+SKSESerializationInterface* g_serialization = nullptr;
+SKSETaskInterface* g_task = nullptr;
+```
+
+在函数`SKSEPlugin_Query`内获取接口实例:
+```C++
+g_messaging	= static_cast<SKSEMessagingInterface*>(a_skse->QueryInterface(kInterface_Messaging));
+g_object = static_cast<SKSEObjectInterface*>(a_skse->QueryInterface(kInterface_Object));
+g_papyrus = static_cast<SKSEPapyrusInterface*>(a_skse->QueryInterface(kInterface_Papyrus));
+g_scaleform	= static_cast<SKSEScaleformInterface*>(a_skse->QueryInterface(kInterface_Scaleform));
+g_serialization = static_cast<SKSESerializationInterface*>(a_skse->QueryInterface(kInterface_Serialization));
+g_task = static_cast<SKSETaskInterface*>(a_skse->QueryInterface(kInterface_Task));
+```
 
 > [C++类型转换](https://blog.csdn.net/qq_40421919/article/details/90677220)
 
 ***
-##### [回到上层](/docs/CommonMethods.md)
+##### [回到上层](/docs/CommonMethods.md) | [插件接口](/docs/CM/Interface.md) | [响应事件](/docs/CM/Event.md) | [游戏数据](/docs/CM/Data.md) | [内存挂钩](/docs/CM/Hook.md)

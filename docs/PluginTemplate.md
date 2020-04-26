@@ -1,18 +1,17 @@
 # 示例插件
-##### [上一节: 开发环境](/docs/Setup.md) | [回到目录](../README.md) | [下一节: 常用方法](/docs/CommonMethods.md)
+##### [回到目录](../README.md) | [开发环境](/docs/Setup.md) | [示例插件](/docs/PluginTemplate.md) | [常用方法](/docs/CommonMethods.md) | [版本集成](/docs/AddressLibrary.md) | [探索未知](/docs/ToUnknown.md) | [CommonLibSSE](/docs/CommonLibSSE.md)
 
 ## 基础
 
 制作插件的第一步, 是先新建一个项目. 右击解决方案, 选择`添加->新建项目`, 在窗口中选中`动态链接库(DLL) C++`并继续下一步. 命名并确定创建路径在`src\skse64`后, 创建即可. (教程将会命名插件项目为`PluginTemplate`, 下文简称`"PluginTemplate"`)  
-![AddProject](../images/sln_add.png)
+![AddProject](/images/sln_add.png)
 
 接下来, 右击解决方案, 选择`添加->新建解决方案文件夹`, 命名为`SKSE`, 然后将所有的来自SKSE组的项目拖拽进去---这一步并不是必需的, 然而良好的文件管理可以在插件项目繁杂时给予非常正向的帮助. 图例:  
-![SolutionFolder](../images/sln_folder.png)
+![SolutionFolder](/images/sln_folder.png)
 
 需要对插件项目的属性进行一些修改, 如下: (**确保`配置`为`所有配置`**)
 ```
 常规->常规属性->C++语言标准  *下拉  |  ISO C++17标准(std:c++17)
-高级->高级属性->使用调试库  |  *清空此选项
 高级->高级属性->字符集  *下拉  |  使用多字节字符集
 C/C++->常规->附加包含目录  *复制  |  $(SolutionDir);$(SolutionDir)..;$(ProjectDir)include;%(AdditionalIncludeDirectories)
      ->常规->SDL检查  |  *清空此选项
@@ -34,7 +33,7 @@ C/C++->常规->附加包含目录  *复制  |  $(SolutionDir);$(SolutionDir)..;$
 SKSE64插件有两种开发方式, 一种是使用传统的SKSE64库 + common_vc14进行开发, 另一种则是使用Ryan的CommonLibSSE库 + 部分SKSE64进行开发. 这篇教程会先以前者为主讲解插件开发的基础知识, 之后则会比较CommonLibSSE与SKSE64, 并以后者做出示例. 当然也可以两个库结合，但结果通常会是插件体积膨胀.
 
 选择一种开发方式很简单, 只需将所对应的库添加进项目引用即可.  
-![AddReference](../images/proj_add_ref.png)
+![AddReference](/images/proj_add_ref.png)
 
 这一部分教程会以SKSE64做讲解, 因此只需要在项目引用窗口中勾选`skse64`并应用即可.
 
@@ -48,10 +47,11 @@ SKSE64插件有两种开发方式, 一种是使用传统的SKSE64库 + common_vc
 
 ## 开发
 
-### [添加文件]
+***
+### 添加文件
 
 首先确保由Visual Studio创建的默认项目文件已被删除---如`pch.h`, `pch.cpp`等默认情况下Visual Studio为DLL项目新建的一些文件. 这些文件于SKSE64插件基本无用, 切换为全文件视图后删除即可. (直接删除只会删除引用)  
-![ShowAllFiles](../images/sln_showall.png)
+![ShowAllFiles](/images/sln_showall.png)
 
 > 全文件视图: 默认情况下Visual Studio会显示过滤器视图, 这样操作的文件都是引用地址, 添加文件无法添加到目标物理文件夹中.
 
@@ -64,9 +64,10 @@ SKSE64插件有两种开发方式, 一种是使用传统的SKSE64库 + common_vc
 在`include`文件夹为其新建`头文件(.h)`并命名为`version.h`. 这将是插件的版本信息.
 
 完成后, 项目应当如下图所示:  
-![ProjectFirstView](../images/proj_first.png)
+![ProjectFirstView](/images/proj_first.png)
 
-### [基础代码]
+***
+### 基础代码
 
 #### exports.def
 
@@ -74,7 +75,7 @@ SKSE64插件有两种开发方式, 一种是使用传统的SKSE64库 + common_vc
 
 正如教程之前所提到的, 插件作者遵守约定的SKSE方法来进行插件的信息查询和加载. 因此需要在`exports.def`里导出约定好的两个函数.
 
-打开`exports.def`文件, 写下如下定义:
+打开`exports.def`文件, 添加如下定义:
 ```C++
 LIBRARY "PluginTemplate"
 EXPORTS
@@ -164,7 +165,7 @@ bool SKSEPlugin_Query(const SKSEInterface* a_skse, PluginInfo* a_info)
 
 `_MESSAGE`日志函数打印(下文简称"打印")此插件的名称`"PluginTemplate"`, 后接`PLTP_VERSION`插件版本信息(会替换`%s`输出控制符).
 
-`a_info`三排代码为其成员`infoVersion`, `name`和`version`赋值. 应总是为`infoVersion`赋值`PluginInfo::KInfoVersion`, 为`name`赋值此插件的名称, 为`version`赋值此插件的大版本信息(单个数字).
+`a_info`三排代码为其成员`infoVersion`, `name`和`version`赋值. 应总是为`infoVersion`赋值`PluginInfo::KInfoVersion`, 为`name`赋值此插件的名称, 为`version`赋值此插件的版本信息(数字).
 
 第一个`if`语句检查SKSE64是否处于编辑器模式, 即检查`a_skse`其成员`isEditor`值是否为`true`. 若值为`true`, 会以`_FATALERROR`打印致命错误`"loaded in editor, marking as incompatible"`, 表明插件于编辑器模式中被加载, 此次加载不兼容. 最后返回`false`表明插件校验失败. 若值为`false`, 此`if`语句将跳过.
 
@@ -172,7 +173,7 @@ bool SKSEPlugin_Query(const SKSEInterface* a_skse, PluginInfo* a_info)
 
 当上述步骤皆校验成功后, 应当返回`true`表明插件校验成功. 若返回`false`, SKSE64会停止校验并中断游戏.
 
-> 在此函数中不应执行除校验之外的操作.
+> 此函数中不应执行除校验和获取接口实例之外的操作.
 
 > 教程使用游戏版本`1.5.97`, 插件作者应适当修改为符合的版本.
 
@@ -199,7 +200,8 @@ bool SKSEPlugin_Load(const SKSEInterface* a_skse)
 
 > 确保两个函数都写于导出域内(花括号内).
 
-#### 作者注:
+***
+### 作者注:
 
 > `main.cpp`示例可以[在这里](/examples/PluginTemplate/src/main.cpp)查看.
 
@@ -216,7 +218,7 @@ bool SKSEPlugin_Load(const SKSEInterface* a_skse)
 + 确保目标平台为`x64`.
 
 插件项目的编译依赖于SKSE64的静态链接库, 因此需要先编译SKSE64项目, 分别为`common_vc14`, `skse64`, `skse64_common`. 若已为SKSE64项目分好文件夹, 此时只需要在解决方案界面右击该文件夹, 选择`生成`即可. 或者选中这三个项目右击并选择`生成`.  
-![BuildProjects](../images/proj_build.png)
+![BuildProjects](/images/proj_build.png)
 
 SKSE64编译完成后, 右击插件项目并选择`生成`.
 
@@ -228,7 +230,8 @@ SKSE64编译完成后, 右击插件项目并选择`生成`.
 
 ## 调试
 
-### [路径设置]
+***
+### 路径设置
 
 调试SKSE64插件首先需要将其挂载到SKSE64的插件文件夹内. 教程会示例如何使用`生成后事件`属性自动拷贝编译后插件至游戏文件夹.
 
@@ -250,11 +253,12 @@ copy /y "$(TargetDir)$(TargetName).pdb" "游戏本体路径\Data\SKSE\Plugins\$(
 > 将`MO2基准目录`替换为实际路径并确保`生成事件->生成后事件->在生成中使用`已设为`是`.
 
 > 如何寻找MO2基准目录: (`/`与`\`皆可作为地址分隔符)  
-> ![MO2Path](../images/mo2_path.png)
+> ![MO2Path](/images/mo2_path.png)
 
 > 当复制到MO2目录后, 需要在MO2界面按下`F5`进行刷新.
 
-### [调试方法]
+***
+### 调试方法
 
 <dl>
     <dt>日志</dt>
@@ -270,7 +274,7 @@ _DMESSAGE("%p", &MyFunc);
 当插件加载时, 便会打印函数`MyFunc`的地址.
 
 > 断点调试法需要对Visual Studio有一定程度的了解. 通过使用`Debug`配置下编译的`skse64_1_5_97.dll`并附加Visual Studio调试器至游戏进程, 可以击中提前设定好的代码断点并观察各项值的变化.  
-![StepDebugger](../images/step_debug.png)
+![StepDebugger](/images/step_debug.png)
 
 > 为什么不打印中文日志? 因为中文日志有可能遇到编码错误.
 
@@ -278,12 +282,13 @@ _DMESSAGE("%p", &MyFunc);
 
 > 当涉及到单步调试时, 教程会使用X64DBG进行断点, 而不是Visual Studio.
 
+***
 ### [Hello SKSE64 !]
 
 通过`skse64_loader.exe`(或MO2的`SKSE`快捷方式)启动游戏. 当游戏主菜单正常显示后, 代表没有致命错误(`_FATALERROR`)发生, 此时可以切出游戏检查日志目录: `~我的文档\My Games\Skyrim Special Edition\SKSE`. 打开`PluginTemplate.log`, 可以看到如下内容:  
-![PluginSuccess](../images/plugin_success.png)
+![PluginSuccess](/images/plugin_success.png)
 
-教程至此, 插件作者应掌握了基本的SKSE64插件结构.
+教程至此, 插件作者应掌握了基本的SKSE64插件项目.
 
 ***
-##### [上一节: 开发环境](/docs/Setup.md) | [回到目录](../README.md) | [下一节: 常用方法](/docs/CommonMethods.md)
+##### [回到目录](../README.md) | [开发环境](/docs/Setup.md) | [示例插件](/docs/PluginTemplate.md) | [常用方法](/docs/CommonMethods.md) | [版本集成](/docs/AddressLibrary.md) | [探索未知](/docs/ToUnknown.md) | [CommonLibSSE](/docs/CommonLibSSE.md)

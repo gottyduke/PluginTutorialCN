@@ -6,11 +6,16 @@
 #include "skse64_common/skse_version.h"
 
 
+// 匿名空间
 namespace
 {
+	// 声明插件句柄
     PluginHandle                g_thisPlugin    = kPluginHandle_Invalid;
+
+	// 声明接口
     SKSEMessagingInterface*     g_messaging     = nullptr;
-    
+
+	// 消息处理函数
     void MessageHandler(SKSEMessagingInterface::Message* a_msg)
     {
         if (a_msg->type == SKSEMessagingInterface::kMessage_DataLoaded) {
@@ -20,8 +25,10 @@ namespace
 }
 
 
+// 导出域
 extern "C"
 {
+	// 校验
     bool SKSEPlugin_Query(const SKSEInterface* a_skse, PluginInfo* a_info)
     {
         IDebugLog::OpenRelative(CSIDL_MYDOCUMENTS, R"(\My Games\Skyrim Special Edition\SKSE\PluginTemplate.log)");
@@ -33,7 +40,8 @@ extern "C"
         a_info->infoVersion = PluginInfo::kInfoVersion;
         a_info->name = "PluginTemplate";
         a_info->version = 1;
-        
+
+    	// 获取插件句柄
         g_thisPlugin = a_skse->GetPluginHandle();
 
         if (a_skse->isEditor) {
@@ -47,19 +55,22 @@ extern "C"
 
             return false;
         }
-        
+
+    	// 获取接口实例
         g_messaging = static_cast<SKSEMessagingInterface*>(a_skse->QueryInterface(kInterface_Messaging));
 
         return true;
     }
 
-    
+
+	// 加载
     bool SKSEPlugin_Load(const SKSEInterface* a_skse)
     {
         _MESSAGE("PluginTemplate loaded");
         
         _MESSAGE("Hello SKSE64 !");
 
+    	// 注册消息队列
         if (g_messaging->RegisterListener(g_thisPlugin, "SKSE", MessageHandler)) {
             _MESSAGE("Registered messaging interface");
         } else {

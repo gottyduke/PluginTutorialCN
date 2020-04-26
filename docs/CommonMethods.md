@@ -1,5 +1,5 @@
 # 常用方法
-##### [上一节: 示例插件](/docs/PluginTemplate.md) | [回到目录](../README.md) | [下一节: 版本集成](/docs/AddressLibrary.md)
+##### [回到目录](../README.md) | [开发环境](/docs/Setup.md) | [示例插件](/docs/PluginTemplate.md) | [常用方法](/docs/CommonMethods.md) | [版本集成](/docs/AddressLibrary.md) | [探索未知](/docs/ToUnknown.md) | [CommonLibSSE](/docs/CommonLibSSE.md)
 
 > 点击链接查看相关教程!
 
@@ -12,4 +12,4 @@
 ## [内存挂钩](/docs/CM/Hook.md)
 
 ***
-##### [上一节: 示例插件](/docs/PluginTemplate.md) | [回到目录](../README.md) | [下一节: 版本集成](/docs/AddressLibrary.md)
+##### [回到目录](../README.md) | [开发环境](/docs/Setup.md) | [示例插件](/docs/PluginTemplate.md) | [常用方法](/docs/CommonMethods.md) | [版本集成](/docs/AddressLibrary.md) | [探索未知](/docs/ToUnknown.md) | [CommonLibSSE](/docs/CommonLibSSE.md)
