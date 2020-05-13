@@ -6,16 +6,16 @@
 #include "skse64_common/skse_version.h"
 
 
-// ÄäÃû¿Õ¼ä
+// åŒ¿åç©ºé—´
 namespace
 {
-	// ÉùÃ÷²å¼ş¾ä±ú
+	// å£°æ˜æ’ä»¶å¥æŸ„å¹¶åˆå§‹åŒ–ä¸ºæ— æ•ˆå€¼
     PluginHandle                g_thisPlugin    = kPluginHandle_Invalid;
 
-	// ÉùÃ÷½Ó¿Ú
+	// å£°æ˜æ¥å£å¹¶åˆå§‹åŒ–ä¸ºç©ºæŒ‡é’ˆ
     SKSEMessagingInterface*     g_messaging     = nullptr;
 
-	// ÏûÏ¢´¦Àíº¯Êı
+	// æ¶ˆæ¯å¤„ç†å‡½æ•°
     void MessageHandler(SKSEMessagingInterface::Message* a_msg)
     {
         if (a_msg->type == SKSEMessagingInterface::kMessage_DataLoaded) {
@@ -25,57 +25,58 @@ namespace
 }
 
 
-// µ¼³öÓò
+// å¯¼å‡ºåŸŸ
 extern "C"
 {
-	// Ğ£Ñé
+	// æ ¡éªŒ
     bool SKSEPlugin_Query(const SKSEInterface* a_skse, PluginInfo* a_info)
     {
+    	// è®¾ç«‹æ—¥å¿—
         IDebugLog::OpenRelative(CSIDL_MYDOCUMENTS, R"(\My Games\Skyrim Special Edition\SKSE\PluginTemplate.log)");
         IDebugLog::SetPrintLevel(IDebugLog::kLevel_Error);
         IDebugLog::SetLogLevel(IDebugLog::kLevel_DebugMessage);
 
         _MESSAGE("PluginTemplate %s", PLTP_VERSION);
 
+        // æ’ä»¶ä¿¡æ¯
         a_info->infoVersion = PluginInfo::kInfoVersion;
         a_info->name = "PluginTemplate";
         a_info->version = 1;
 
-    	// »ñÈ¡²å¼ş¾ä±ú
+    	// è·å–æ’ä»¶å¥æŸ„
         g_thisPlugin = a_skse->GetPluginHandle();
 
+    	// æ ¡éªŒæ¨¡å¼
         if (a_skse->isEditor) {
             _MESSAGE("loaded in editor, marking as incompatible");
-
             return false;
         }
 
+    	// æ ¡éªŒç‰ˆæœ¬
         if (a_skse->runtimeVersion != RUNTIME_VERSION_1_5_97) {
             _FATALERROR("unsupported runtime version %08x", a_skse->runtimeVersion);
-
             return false;
         }
 
-    	// »ñÈ¡½Ó¿ÚÊµÀı
+    	// è·å–æ¥å£å®ä¾‹
         g_messaging = static_cast<SKSEMessagingInterface*>(a_skse->QueryInterface(kInterface_Messaging));
 
         return true;
     }
 
 
-	// ¼ÓÔØ
+	// åŠ è½½
     bool SKSEPlugin_Load(const SKSEInterface* a_skse)
     {
         _MESSAGE("PluginTemplate loaded");
         
         _MESSAGE("Hello SKSE64 !");
 
-    	// ×¢²áÏûÏ¢¶ÓÁĞ
+    	// æ³¨å†Œæ¶ˆæ¯é˜Ÿåˆ—
         if (g_messaging->RegisterListener(g_thisPlugin, "SKSE", MessageHandler)) {
             _MESSAGE("Registered messaging interface");
         } else {
-            _MESSAGE("Failed to register messaging interface");
-
+            _FATALERROR("Failed to register messaging interface");
             return false;
         }
         

@@ -116,7 +116,7 @@ constexpr auto PLTP_VERSION = "1.0.0.0";
 + `"version.h"`里面包含着插件本身的版本信息(`PLTP_VERSION`).
 + `<shlobj.h>`由尖括号包围而不是双引号, 代表这个头文件由安装的C++工具集提供. 可以从这里获取用户文件夹的相对路径.
 + `"PluginAPI.h"`这是SKSE64提供的插件接口, 可以从这里获取各种SKSE64接口.
-+ `"skse_version.h"`这是由SKSE64提供的版本信息, 可以从这里获取当前游戏版本以校验自身插件是否兼容.
++ `"skse_version.h"`这是SKSE64提供的版本信息, 可以从这里获取当前游戏版本以校验自身插件是否兼容.
 
 > 引用头文件: 引用一个头文件其实就是把这个头文件的内容隐式复制到当前位置, 使得当前文件拥有所引用头文件的内容. 复制步骤是编译时才会执行且不可见.
 
@@ -163,13 +163,13 @@ bool SKSEPlugin_Query(const SKSEInterface* a_skse, PluginInfo* a_info)
 
 `IDebugLog`三排代码首先确定日志文件的路径`\My Games\Skyrim Special Edition\SKSE\PluginTemplate.log`, 日志输出的等级`IDebugLog::kLevel_Error`和日志记录的等级`IDebugLog::kLevel_DebugMessage`.
 
-`_MESSAGE`日志函数打印(下文简称"打印")此插件的名称`"PluginTemplate"`, 后接`PLTP_VERSION`插件版本信息(会替换`%s`输出控制符).
+`_MESSAGE`函数打印(下文简称"打印")此插件的名称`"PluginTemplate"`, 后接`PLTP_VERSION`插件版本信息(会替换`%s`输出控制符).
 
 `a_info`三排代码为其成员`infoVersion`, `name`和`version`赋值. 应总是为`infoVersion`赋值`PluginInfo::KInfoVersion`, 为`name`赋值此插件的名称, 为`version`赋值此插件的版本信息(数字).
 
 第一个`if`语句检查SKSE64是否处于编辑器模式, 即检查`a_skse`其成员`isEditor`值是否为`true`. 若值为`true`, 会以`_FATALERROR`打印致命错误`"loaded in editor, marking as incompatible"`, 表明插件于编辑器模式中被加载, 此次加载不兼容. 最后返回`false`表明插件校验失败. 若值为`false`, 此`if`语句将跳过.
 
-第二个`if`语句检查SKSE64的版本, 即检查`a_skse`其成员`runtimeVersion`是否不等于**`RUNTIME_VERSION_1_5_97`**. 若不等于, 会以`_FATALERROR`打印致命错误`"unsupported runtime version"`, 后接`runtimeVersion`当前游戏版本信息(会替换`%08x`输出控制符), 表明插件所需版本信息和当前游戏版本不兼容. 最后返回`false`表明插件校验失败. 若版本信息相等, 此`if`语句将跳过.
+第二个`if`语句检查SKSE64的版本, 即检查`a_skse`其成员`runtimeVersion`是否不等于`RUNTIME_VERSION_1_5_97`. 若不等于, 会以`_FATALERROR`函数打印致命错误`"unsupported runtime version"`, 后接`runtimeVersion`当前游戏版本信息(会替换`%08x`输出控制符), 表明插件所需版本信息和当前游戏版本不兼容. 最后返回`false`表明插件校验失败. 若版本信息相等, 此`if`语句将跳过.
 
 当上述步骤皆校验成功后, 应当返回`true`表明插件校验成功. 若返回`false`, SKSE64会停止校验并中断游戏.
 
@@ -220,13 +220,13 @@ bool SKSEPlugin_Load(const SKSEInterface* a_skse)
 插件项目的编译依赖于SKSE64的静态链接库, 因此需要先编译SKSE64项目, 分别为`common_vc14`, `skse64`, `skse64_common`. 若已为SKSE64项目分好文件夹, 此时只需要在解决方案界面右击该文件夹, 选择`生成`即可. 或者选中这三个项目右击并选择`生成`.  
 ![BuildProjects](/images/proj_build.png)
 
-SKSE64编译完成后, 右击插件项目并选择`生成`.
+SKSE64编译完成后, 右击插件项目`PluginTemplate`并选择`生成`.
 
 > 编译SKSE64项目时, 可能会遇到`静态断言失败`错误. 此错误不会中断编译过程.  
 > *这是因为静态断言在编译前执行, 此时Visual Studio还不能正确的判断断言的对象大小.*
 
 > 可以在`Debug`和`Release`两个配置下分别编译一次SKSE64项目.
-> 此步骤是一次性的, 编译好的SKSE64项目可以为插件编译节约大量的时间.
+> 此步骤是一次性的, 编译好的SKSE64项目可以为以后的插件编译节约大量的时间.
 
 ## 调试
 
@@ -237,6 +237,7 @@ SKSE64编译完成后, 右击插件项目并选择`生成`.
 
 右击插件项目并选择`属性`, 点击`生成事件->生成后事件->命令行`属性的下拉框并选择`<编辑>`, 填写如下:
 ```Batch
+if not exist "游戏本体路径\mods\$(TargetName)\SKSE\Plugins\" mkdir "游戏本体路径\mods\$(TargetName)\SKSE\Plugins\"
 copy /y "$(TargetPath)" "游戏本体路径\Data\SKSE\Plugins\$(TargetFileName)"
 copy /y "$(TargetDir)$(TargetName).pdb" "游戏本体路径\Data\SKSE\Plugins\$(TargetDir)$(TargetName).pdb"
 ```

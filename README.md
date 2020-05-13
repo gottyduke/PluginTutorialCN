@@ -17,10 +17,10 @@ for 上古卷轴5: 天际特别版 (SKSE64) - 持续施工中
 * [调试](/docs/PluginTemplate.md#调试)
 
 ### [3. 常用方法](/docs/CommonMethods.md)
-* [插件接口](/docs/CM/Interface.md)
-* [响应事件](/docs/CM/Event.md)
+* [插件接口 <-施工进度](/docs/CM/Interfaces.md)
+* [响应事件](/docs/CM/Events.md)
 * [游戏数据](/docs/CM/Data.md)
-* [内存挂钩](/docs/CM/Hook.md)
+* [内存挂钩](/docs/CM/Hooks.md)
 
 ### [4. 版本集成](/docs/AddressLibrary.md)
 * [查询偏移](/docs/AddressLibrary.md#查询偏移)
@@ -42,6 +42,6 @@ for 上古卷轴5: 天际特别版 (SKSE64) - 持续施工中
 
 感谢Ryan和SKSE组让这一切成为可能.
 
-Special thanks to Ryan and SKSE devs, all of these won't ever be possible without their work.
+Special thanks to Ryan and SKSE devs, all of these won't ever be possible without their hard work.
 
 感谢射大师(T-Avatar)的帮助.
