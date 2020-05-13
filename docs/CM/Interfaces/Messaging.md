@@ -32,13 +32,13 @@ if (g_messaging->RegisterListener(g_thisPlugin, "SKSE", MessageHandler)) {
     return false;
 }
 ```
-函数`RegisterListener`: 返回值类型`bool`
+函数`RegisterListener`: 此函数负责注册插件聆听至消息队列中.
 参数 | 类型
 --- | ---
 `PluginHandle` | 聆听者插件句柄
 `const char*` | 广播者插件名称
 `EventCallback` | 消息处理回调函数
-此函数负责注册插件聆听至消息队列中.
+返回值 | `bool`
 
 应总是为`PluginHandle`传入此插件句柄`g_thisPlugin`, 为`const char*`(字符串)传入消息发送者名称的字面值(此处为`"SKSE"`代表 SKSE64), 为`EventCallback`传入一个符合消息处理规范的函数(此处为`MessageHandler`代表期望执行的消息处理函数).
 
@@ -88,7 +88,7 @@ void MyHandler(SKSEMessagingInterface::Message* a_msg) {
 char myMessage[16] = "Hello Plugin!";
 g_messaging->Dispatch(g_thisPlugin, 0, myMessage, 16, nullptr);
 ```
-函数`Dispatch`: 无返回值
+函数`Dispatch`: 此函数负责广播消息至特定聆听者或全体聆听者.
 参数 | 类型
 --- | ---
 `PluginHandle` | 广播者插件句柄
@@ -96,7 +96,7 @@ g_messaging->Dispatch(g_thisPlugin, 0, myMessage, 16, nullptr);
 `void*` | 消息数据指针
 `UInt32` | 消息数据大小
 `const char*` | 聆听者插件名称
-此函数负责广播消息至特定聆听者或全体聆听者.
+返回值 | `void`
 
 应总是为`PluginHandle`传入此插件句柄`g_thisPlugin`, 为第一个`UInt32`传入广播者和聆听者约定好的消息辨识枚举(此处未约定, 因此传入0), 为`void*`传入要广播的消息数据的指针(此处为字符串`myMessage`), 为第二个`UInt32`传入数据的大小(字符串`myMessage`的大小为16). 若想广播至所有注册的聆听者, 为`const char*`传入`nullptr`(空指针, 表明不声明特定聆听者). 反之则传入特定聆听者的插件名称.
 

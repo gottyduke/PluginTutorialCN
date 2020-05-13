@@ -6,12 +6,12 @@
 SKSE64提供了接口基类(`SKSEInterface`), 其派生类如下:
 接口 | 类型 | 示例
 --- | --- | ---
-`SKSEMessagingInterface` | 消息队列 | [施工中](/docs/CM/Interface/Messaging.md)
-`SKSEObjectInterface` | Papyrus对象 | [施工中](/docs/CM/Interface/Object.md)
-`SKSEPapyrusInterface` | Papyrus脚本 | [施工中](/docs/CM/Interface/Papyrus.md)
-`SKSEScaleformInterface` | Scaleform界面 | [施工中](/docs/CM/Interface/Scaleform.md)
-`SKSESerializationInterface` | 序列化 | [施工中](/docs/CM/Interface/Serialization.md)
-`SKSETaskInterface` | 代理委托 | [施工中](/docs/CM/Interface/Task.md)
+`SKSEMessagingInterface` | 消息队列 | [施工中](/docs/CM/Interfaces/Messaging.md)
+`SKSEObjectInterface` | Papyrus对象 | [施工中](/docs/CM/Interfaces/Object.md)
+`SKSEPapyrusInterface` | Papyrus脚本 | [施工中](/docs/CM/Interfaces/Papyrus.md)
+`SKSEScaleformInterface` | Scaleform界面 | [施工中](/docs/CM/Interfaces/Scaleform.md)
+`SKSESerializationInterface` | 序列化 | [施工中](/docs/CM/Interfaces/Serialization.md)
+`SKSETaskInterface` | 代理委托 | [施工中](/docs/CM/Interfaces/Task.md)
 
 > 请先掌握如何获取接口实例(下文), 再阅读相关示例.
 
