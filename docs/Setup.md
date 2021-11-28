@@ -44,8 +44,8 @@
 确认游戏本体可以正常运行;  
 确认游戏可以从SKSE正常运行;
 确认游戏可以从MO2正常运行;  
-在环境变量-系统变量中添加变量`SkyrimSEPath`并为其赋值天际特别版的安装目录.  
-如果需要同时保留天际特别版和天际年度版平行开发环境, 在环境变量-系统变量中添加变量`SkyrimAEPath`并为其赋值天际年度版的安装目录, 并确认以上适用于平行版本.
+在环境变量-系统变量中添加变量`SkyrimAEPath`并为其赋值天际年度版的安装目录.  
+如果需要同时保留天际特别版和天际年度版平行开发环境, 在环境变量-系统变量中添加变量`SkyrimSEPath`并为其赋值天际特别版的安装目录, 并确认以上适用于平行版本.
 
 移除/禁用ENB和ReShade插件(会减缓启动速度, 妨碍调试);
 
@@ -78,7 +78,7 @@ cd .\SKSEPlugins
 ### [脚本说明]
 作者的工作项目包含三个常用脚本辅助开发, `!Rebuild`, `!Update`, 和`!MakeNew`.  
 
-`!Rebuild [编译库:MT|MD]`用于重新生成整个解决方案. 参数`MD`为动态编译`MultiThreadedDLL`, 使用的`vcpkg`为`x64-windows-static-md`. 如无特殊需求, 建议使用参数`MT`来生成静态编译`MultiThreaded`, 使用的`vcpkg`为`x64-windows-static`. 无参数运行时会刷新`CMakeLists.txt`以重新更新VS解决方案(下方解释).  
+`!Rebuild <编译库:MD|MT> <游戏版本:AE|SE>`用于重新生成整个解决方案. 参数`MD`为动态编译`MultiThreadedDLL`, 使用的`vcpkg`为`x64-windows-static-md`. 如无特殊需求, 建议使用参数`MT`来生成静态编译`MultiThreaded`, 使用的`vcpkg`为`x64-windows-static`. 参数`AE`或`SE`选择用于编译的游戏平台. 无参数运行时会刷新`CMakeLists.txt`以重新更新VS解决方案(下方解释).  
 
 `!MakeNew <项目名称> <项目类别:P|L>`用于快速新建符合此工作项目规格的插件项目(`P`)或库项目(`L`).  
 
@@ -90,10 +90,12 @@ cd .\SKSEPlugins
 ```powershell
 cd .\SKSEPlugins
 .\!MakeNew MyNewPlugin P
-.\!Rebuild MT
+.\!Rebuild MT AE
 ```
 完成后打开`Build\skse64.sln`解决方案并编译`MyNewPlugin`项目. 编译后的二进制文件将会自动拷贝至MO2目录(MO2界面内按F5刷新).  
 > `!MakeNew`命令生成的插件项目非常基础, 需要根据插件作者自身需求对`CMakeLists.txt`和`vcpkg.json`进行进一步的修改.  
+> 插件项目内`main.cpp`文件包含默认作者名`Dropckicker`, 需要插件作者自行修改.  
+> 版本更迭时, 请勿直接修改任何源文件. 在插件项目根目录下`CMakeLists.txt`内修改版本即可.  
 
 #### [添加文件]
 在插件项目内`src`文件夹内新建文件/复制文件后, 或者在`include`文件夹内添加外部包含库文件后, 在`SKSEPlugins`目录下运行`.\!Rebuild`(无参数)并在VS内编译项目`ZERO_CHECK`. 更新项目文件完成后重新加载解决方案即可使用新添加的文件.    
