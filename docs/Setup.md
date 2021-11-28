@@ -61,8 +61,12 @@ iVSyncPresentInterval=1
 其中分辨率无需设置为1366x768, 这里只为使用一个比全屏幕分辨率低的窗口模式, 方便切出游戏和调试.
 
 ### [示例项目]
-因为作者特别懒所以直接用自己的工作项目做示例了.
-打开`powershell`或常用的命令行终端, 重定向至合适的工作目录. 运行以下命令:  
+因为作者特别懒所以直接用自己的工作项目做示例了.  
+以管理员权限启动Windows Terminal或PowerShell, 运行命令更改执行策略:  
+```powershell
+Set-ExecutionPolicy -ExecutionPolicy AllSigned -Scope LocalMachine
+```   
+重新打开`powershell`或常用的命令行终端, 重定向至合适的工作目录. 运行以下命令:  
 ```powershell
 git clone --recurse-submodules https://github.com/gottyduke/SKSEPlugins
 cd .\SKSEPlugins
@@ -70,19 +74,9 @@ cd .\SKSEPlugins
 & $env:VCPKG_ROOT\vcpkg install rsm-binary-io:x64-windows-static
 & $env:VCPKG_ROOT\vcpkg install spdlog:x64-windows-static
 & $env:VCPKG_ROOT\vcpkg install xbyak:x64-windows-static
-.\!Rebuild MT
 ```  
 在环境变量-系统变量中添加变量`CommonLibSSEPath`并为其赋值`CommonLibSSE`的存放目录(`路径/SKSEPlugins/Library/CommonLibSSE`).  
 在环境变量-系统变量中添加变量`DKUtilPath`并为其赋值`DKUtil`的存放目录(`路径/SKSEPlugins/Library/DKUtil`).  
-
-### [脚本说明]
-作者的工作项目包含三个常用脚本辅助开发, `!Rebuild`, `!Update`, 和`!MakeNew`.  
-
-`!Rebuild <编译库:MD|MT> <游戏版本:AE|SE>`用于重新生成整个解决方案. 参数`MD`为动态编译`MultiThreadedDLL`, 使用的`vcpkg`为`x64-windows-static-md`. 如无特殊需求, 建议使用参数`MT`来生成静态编译`MultiThreaded`, 使用的`vcpkg`为`x64-windows-static`. 参数`AE`或`SE`选择用于编译的游戏平台. 无参数运行时会刷新`CMakeLists.txt`以重新更新VS解决方案(下方解释).  
-
-`!MakeNew <项目名称> <项目类别:P|L>`用于快速新建符合此工作项目规格的插件项目(`P`)或库项目(`L`).  
-
-`!Update <运行模式:COPY|SOURCEGEN|DISTRIBUTE>`用于编译后复制文件, 为`CMakeLists.txt`生成源文件表, 以及自动更新. 在正常使用此工作项目时, 此脚本会被自动更新到每一个下属项目中并嵌入至生成的解决方案中, 不需要单独运行.  
 
 ### [新建项目]
 命令`!MakeNew <项目名称> <项目类别:P|L>`可以用于快速新建插件项目或库项目.
@@ -101,7 +95,16 @@ cd .\SKSEPlugins
 在插件项目内`src`文件夹内新建文件/复制文件后, 或者在`include`文件夹内添加外部包含库文件后, 在`SKSEPlugins`目录下运行`.\!Rebuild`(无参数)并在VS内编译项目`ZERO_CHECK`. 更新项目文件完成后重新加载解决方案即可使用新添加的文件.    
 > 不要在VS内手动添加文件.  
 > `ZERO_CHECK`用于在VS内同步应用于`CMakeLists.txt`的更新.  
-> 使用`CMake`管理插件项目初期可能会使习惯于直接编译项目的插件作者感到很不适应, 但外部编译(out-of-source build)将开发编译期产生的繁杂文件和纯净的插件项目源文件分离, 有助于后期的管理和拓展.
+> 使用`CMake`管理插件项目初期可能会使习惯于直接编译项目的插件作者感到很不适应, 但外部编译(out-of-source build)将开发编译期产生的繁杂文件和纯净的插件项目源文件分离, 有助于后期的管理和拓展.  
+
+### [脚本说明]
+作者的工作项目包含三个常用脚本辅助开发, `!Rebuild`, `!Update`, 和`!MakeNew`.  
+
+`!Rebuild <编译库:MD|MT> <游戏版本:AE|SE>`用于重新生成整个解决方案. 参数`MD`为动态编译`MultiThreadedDLL`, 使用的`vcpkg`为`x64-windows-static-md`. 如无特殊需求, 建议使用参数`MT`来生成静态编译`MultiThreaded`, 使用的`vcpkg`为`x64-windows-static`. 参数`AE`或`SE`选择用于编译的游戏平台. 无参数运行时会刷新`CMakeLists.txt`以重新更新VS解决方案(下方解释).  
+
+`!MakeNew <项目名称> <项目类别:P|L>`用于快速新建符合此工作项目规格的插件项目(`P`)或库项目(`L`).  
+
+`!Update <运行模式:COPY|SOURCEGEN|DISTRIBUTE>`用于编译后复制文件, 为`CMakeLists.txt`生成源文件表, 以及自动更新. 在正常使用此工作项目时, 此脚本会被自动更新到每一个下属项目中并嵌入至生成的解决方案中, 不需要单独运行.  
 
 ***
 ##### [回到目录](../README.md) | [开发环境](/docs/Setup.md) | [探索未知](/docs/ToUnknown.md)
