@@ -1,13 +1,15 @@
 # 开发环境
-##### [回到目录](../README.md) | [开发环境](/docs/Setup.md) | [示例插件](/docs/PluginTemplate.md) | [常用方法](/docs/CommonMethods.md) | [版本集成](/docs/AddressLibrary.md) | [探索未知](/docs/ToUnknown.md) | [CommonLibSSE](/docs/CommonLibSSE.md)
+##### [回到目录](../README.md) | [开发环境](/docs/Setup.md) | [探索未知](/docs/ToUnknown.md)
 
 ## 工具
 
 ### [必需工具]
-+ [Visual Studio 2015+](https://visualstudio.microsoft.com)
-+ [上古卷轴5: 天际特别版](https://store.steampowered.com/app/489830/The_Elder_Scrolls_V_Skyrim_Special_Edition)
++ [Visual Studio](https://visualstudio.microsoft.com)
++ [CMake](https://cmake.org/)
++ [vcpkg](https://github.com/microsoft/vcpkg/releases)
++ [上古卷轴5: 天际特别版 1.5.97](https://store.steampowered.com/app/489830/The_Elder_Scrolls_V_Skyrim_Special_Edition)
 
-使用其他IDE例如CLion, VS Code + CMake也可胜任开发, 但skse64源码分发自Visual Studio 2015版本, 若想有效率的查看/利用已有的代码, 使用Visual Studio 2015+是最好的选择.
+本教程会使用CMake管理插件项目，并用Visual Studio 2022进行开发和编译.
 
 ### [可选工具]
 + [Steamless (用于去除Steam的反Debug保护)](https://github.com/atom0s/Steamless)
@@ -18,40 +20,28 @@
 > Steamless使用方法: 到`Release`页面下载最新版Steamless, 解压缩后运行`Steamless.exe`, 选择`SkyrimSE.exe`并点击运行即可移除Steam的DRM验证.
 
 ## 配置
+### [CMake]
+使用`CMake`保持外部编译的规范，有助于管理插件项目和依赖项. [下载CMake](https://cmake.org/)后安装. 
 
-### [SKSE64]
+### [vcpkg]
+`vcpkg`用于获取和更新依赖项. [下载vcpkg](https://github.com/microsoft/vcpkg/releases)后解压至合适位置.  
+在环境变量-系统变量中添加变量`VCPKG_ROOT`并为其赋值本地`vcpkg`的安装目录.  
+![vcpkgAddEnv](/images/env_var.png)
 
-首先前往[SKSE官网](http://skse.silverlock.org)下载符合游戏版本的SKSE64(`2.0.XX`), 解压缩后将`skse64_2_00_XX\src`文件夹移动到一个适合工作的路径(教程将会使用`2.0.17`对应游戏版本`1.5.97`).
-
-确定必需工具都安装好后, 打开`src\skse64\skse64.sln`文件. 这就是插件开发的"基地", 其他的项目都会在这里进行管理.
-
-如果提示源代码管理(Source Control), 点击永久移除即可. 根据使用的Visual Studio版本不同, 可能会提示重定向SDK和工具集, 点击升级到最新版即可(Retarget). 这是SKSE组开发SKSE64所用的配置, 与插件开发无关.
-
-加载完毕后, 会看到如下项目结构:
-```
--skse64
-    -common_vc14
-    -skse64
-    -skse64_common
-    -skse64_loader
-    -skse64_loader_common
-    -skse64_steam_loader
-```
-其中`common_vc14`项目在`src\skse64`路径内, 其它项目在`src\skse64\skse64`路径内.
-
-选中所有项目(选中第一个项目, 按住`shift`再点击最后一个项目), 右击打开属性面板(Properties), 左上角`配置`选中`所有配置`, 将选项`生成事件->生成后事件->在生成中使用`改为`否`并应用. 同上, 这是skse组开发skse64所用的配置, 与插件开发无关.
-
-选中`skse64`和`skse64_common`两个项目后右击打开属性面板, 将选项`常规->配置类型`改为`静态库(.lib)`并应用. 这样skse64的项目配置就完成了.  
-
-> 可以移除`skse64_loader`, `skse64_loader_common`和`skse64_steam_loader`三个项目. 这是SKSE64的启动器项目, 与插件开发无关.
+### [MO2] 
+在MO2新建一个档案(复制已有档案)用于调试插件.  
+![MO2AddProfile](/images/mo2_addprof.png)  
+在环境变量-系统变量中添加变量`MO2Path`并为其赋值天际特别版MO2的数据目录. 
 
 ### [游戏配置]
-
-确认游戏本体可以正常运行;
+确认游戏本体可以正常运行;  
+确认游戏可以从SKSE正常运行;
+确认游戏可以从MO2正常运行;  
+在环境变量-系统变量中添加变量`Skyrim64Path`并为其赋值天际特别版的安装目录.
 
 移除/禁用ENB和ReShade插件(会减缓启动速度, 妨碍调试);
 
-使用BethINI工具或者手动配置游戏`SkyrimPrefs.ini`文件:
+使用BethINI工具或者手动配置游戏`SkyrimPrefs.ini`文件(同步至MO2):
 ```
 [Display]
 bBorderLess=0
@@ -60,13 +50,28 @@ iSize H=768
 iSize W=1366
 iVSyncPresentInterval=1
 ```
-其中`iSize H`和`iSize W`值不一定设置为1366x768, 这里只是为了使用一个比全屏幕分辨率低的窗口模式, 方便切出游戏和调试.
+其中`iSize H`和`iSize W`值无需设置为1366x768, 这里只为使用一个比全屏幕分辨率低的窗口模式, 方便切出游戏和调试.
 
-> 如果使用MO2:  
-> 在MO2新建一个档案(复制已有档案)用于调试插件.  
->![MO2AddProfile](/images/mo2_addprof.png)  
-> 使用BethINI时将路径设置到MO2的新档案路径再进行配置.  
->![BethINIRedirect](/images/bini_red.png)
+### [示例项目]
+[下载至本地](https://github.com/gottyduke/PluginTutorialCN/archive/refs/heads/master.zip)后解压`example`文件夹至合适位置, 这是教程的示例项目, 包含一个简单易用的`powershell`脚本辅助开发. 
 
+### [依赖项]
+本教程示例项目依赖于`spdlog`, `CommonLibSSE`, 以及`DKUtil`.
+打开`powershell`或常用的命令行终端, 重定向至`example`示例项目内. 运行以下命令:
+```powershell
+pushd
+cd $ENV:VCPKG_ROOT
+.\vcpkg install spdlog:x64-windows-static-md
+.\vcpkg install boost-stl-interfaces:x64-windows-static-md
+popd
+mkdir extern
+cd .\extern
+git clone https://github.com/Ryan-rsm-McKenzie/CommonLibSSE
+git clone https://github.com/gottyduke/DKUtil
+cd ..
+cmake -B build -S .
+```
+完成后打开`build\Template.sln`解决方案并编译. 编译后的二进制文件将会自动拷贝至MO2目录(MO2界面内按F5刷新).
+> `ZERO_CHECK`用于在VS内同步CMakeLists.txt的更新.
 ***
-##### [回到目录](../README.md) | [开发环境](/docs/Setup.md) | [示例插件](/docs/PluginTemplate.md) | [常用方法](/docs/CommonMethods.md) | [版本集成](/docs/AddressLibrary.md) | [探索未知](/docs/ToUnknown.md) | [CommonLibSSE](/docs/CommonLibSSE.md)
+##### [回到目录](../README.md) | [开发环境](/docs/Setup.md) | [探索未知](/docs/ToUnknown.md)

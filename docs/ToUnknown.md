@@ -1,11 +1,20 @@
 # 探索未知
-##### [上一节: 版本集成](/docs/AddressLibrary.md) | [回到目录](../README.md) | [下一节: CommonLibSSE](/docs/CommonLibSSE.md)
+##### [回到目录](../README.md) | [开发环境](/docs/Setup.md) | [探索未知](/docs/ToUnknown.md)
+这一部分作者太懒了, 直接拿自己的几个项目和当时的思路举例.
 
-## 寻找成员
+## 内存补丁
+
+### [概念]
+内存补丁顾名思义在游戏内存内打上我们期望的补丁. 补丁可以是一个跳转, 一个修改后的数据, 或者直接改动机器指令. 在`DKUtil`和`Address Library`的加持下, 为天际特别版打内存补丁格外容易.
+
+### [流程]
+首先明确自己的代码期望达到什么效果, 以及是否有不需要修改内存的方法.  
+
 
 ## 查看指令
 
-## 定位指针
+## 寻找成员
+
 
 ***
-##### [上一节: 版本集成](/docs/AddressLibrary.md) | [回到目录](../README.md) | [下一节: CommonLibSSE](/docs/CommonLibSSE.md)
+##### [回到目录](../README.md) | [开发环境](/docs/Setup.md) | [探索未知](/docs/ToUnknown.md)
