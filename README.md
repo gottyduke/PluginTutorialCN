@@ -7,6 +7,7 @@ for 上古卷轴5: 天际特别版 (SKSE64) - 持续施工中
 ### [1. 开发环境](/docs/Setup.md)
 * [工具](/docs/Setup.md#工具)
 * [配置](/docs/Setup.md#配置)
+* [快速入门](/docs/QuickStart.md)
 
 ### [2. 探索未知](/docs/ToUnknown.md)
 * [内存补丁](/docs/ToUnknown.md#定位指针)
