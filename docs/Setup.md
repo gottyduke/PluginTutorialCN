@@ -32,7 +32,6 @@
 
 ### vcpkg
 `vcpkg`用于获取和管理依赖项. 如果本地已安装`vcpkg`, 则在系统环境变量添加变量`VCPKG_ROOT`并为其赋值本地`vcpkg`的安装目录.  
-![vcpkgAddEnv](/images/env_var.png)  
 如果本地未安装`vcpkg`, 教程示例项目会自动安装`vcpkg`.  
 
 ### Visual Studio
