@@ -63,7 +63,7 @@
 ### BOOTSTRAP
 **第一次运行**示例项目需要以**管理员权限**打开`powershell`或常用的命令行终端, 重定向至合适的工作目录, 运行以下命令:  
 ```powershell
-Set-ExecutionPolicy -ExecutionPolicy   -Scope LocalMachine
+Set-ExecutionPolicy -ExecutionPolicy Unrestricted -Scope LocalMachine
 git clone https://github.com/gottyduke/SKSEPlugins
 cd .\SKSEPlugins
 .\!Rebuild BOOTSTRAP
