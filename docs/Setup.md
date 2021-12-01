@@ -64,11 +64,11 @@
 **第一次运行**示例项目需要以**管理员权限**打开`powershell`或常用的命令行终端, 重定向至合适的工作目录, 运行以下命令:  
 ```powershell
 git clone https://github.com/gottyduke/SKSEPlugins
+dir *SKSEPlugins* | Unblock-File
 cd .\SKSEPlugins
-dir .\*SKSEPlugins* | Unblock-File
-.\!Rebuild BOOTSTRAP
+.\!Rebuild BOOTSTRAP REDO
 ```  
-此过程中根据提示完善工程项目相关信息.  
+`REDO`参数会比较缓慢, 在此过程中根据提示完善工程项目相关信息.  
 运行完成后**重启**`powershell`或常用的命令行终端.  
 
 ### 生成方案
@@ -77,7 +77,7 @@ dir .\*SKSEPlugins* | Unblock-File
 ```powershell
 .\!Rebuild MT AE
 ```
-这样便生成了一个解决方案, 该方案的编译模式为静态编译`MT`, 编译目标为天际年度版`AE`, 使用的`CommonLib`为最新版.  
+这样便生成了一个解决方案, 该方案的编译模式为静态编译`MT`, 编译目标为天际年度版`AE`, 使用的`CommonLib`为[默认CLib](https://github.com/Ryan-rsm-McKenzie/CommonLibSSE).  
 ![CLI_Build](/images/rebuilt.png)  
 
 ### 新建项目
