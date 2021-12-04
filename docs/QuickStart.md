@@ -120,13 +120,19 @@ __完成上面的操作后，请务必关闭PowerShell并重新打开！否则�
    
    ![BuildOutput](/images/quickstart/14.png)
 
+<br/>
+
 2. 随后便可在"`SKSEPlugins\Build\bin\Debug`"路径下找到生成的`MyFirstPlugin.dll`插件。
 
      ![PluginPath](/images/quickstart/15.png)
    
+<br/>
+
 3. 若在BOOTSTRAP阶段时已经设置了MO2文件路径，则一个新的名为`MyFirstPlugin`的mod会出现在MO2的MOD列表中（若没有则刷新一下MO2），`MyFirstPlugin.dll`则已被拷贝到此mod文件里面。
     
     ![MO2Plugin](/images/quickstart/16.png)
+
+<br/>
 
 4. 若未设置MO2文件路径，则`MyFirstPlugin.dll`会被拷贝到AE版游戏根目录下的"`Data\SKSE\Plugins`"路径下。
 
