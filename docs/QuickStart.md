@@ -87,7 +87,6 @@ __完成上面的操作后，请务必关闭PowerShell并重新打开！否则�
 <br/>   
 
 3.  关于`!MakeNew`脚本的具体使用说明可以查阅[开发环境](/docs/Setup.md)中的**脚本说明**。
-<br/> 
 
 ***  
 
@@ -110,7 +109,6 @@ __完成上面的操作后，请务必关闭PowerShell并重新打开！否则�
 <br/>
 
 3. 关于`!Rebuild`脚本的具体使用说明可以查阅[开发环境](/docs/Setup.md)中的**脚本说明**。
-<br/>
 
 ***
 
@@ -131,7 +129,6 @@ __完成上面的操作后，请务必关闭PowerShell并重新打开！否则�
     ![MO2Plugin](/images/quickstart/16.png)
 
 4. 若未设置MO2文件路径，则`MyFirstPlugin.dll`会被拷贝到AE版游戏根目录下的"`Data\SKSE\Plugins`"路径下。
-<br/>
 
 ***
 
