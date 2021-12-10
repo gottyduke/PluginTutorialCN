@@ -59,6 +59,9 @@
     ![BOOTSTRAP完成](/images/quickstart/9.png)   
 
 ---
+
+<br/>
+
 ## 重启PowerShell
 
 __完成上面的操作后, 请务必关闭PowerShell并重新打开! 否则会造成接下来的指令报错不能运行! ! !__  
@@ -69,6 +72,9 @@ __完成上面的操作后, 请务必关闭PowerShell并重新打开! 否则会�
 <br/> 
 
 ---
+
+<br/>
+
 ## 新建插件源代码项目
 1. 重新打开PowerShell, 定位到`\SKSEPlugins`文件夹后, 输入以下指令以新建一个名为"MyFirstPlugin"的SKSE插件项目.
     ```PS
@@ -85,6 +91,9 @@ __完成上面的操作后, 请务必关闭PowerShell并重新打开! 否则会�
 3. 关于`!MakeNew`脚本的具体使用说明可以查阅[脚本说明](/docs/setup/Script.md).
 
 ---
+
+<br/>
+
 ## 生成工程项目
 源代码项目已经建立好了, 接下来我们需要生成visual studio的工程项目.  
 
@@ -103,6 +112,9 @@ __完成上面的操作后, 请务必关闭PowerShell并重新打开! 否则会�
 3. 关于`!Rebuild`脚本的具体使用说明可以查阅[脚本说明](/docs/setup/Script.md).
 
 ---
+
+<br/>
+
 ## 编译DLL插件
 1. 打开`SKSEPlugins\Build\Plugins\MyFirstPlugin`路径下的`MyFirstPlugin.sln`项目, 然后点击生成项目解决方案以编译DLL插件, 编译插件成功后的输出结果如下图所示.
    
@@ -128,7 +140,6 @@ __完成上面的操作后, 请务必关闭PowerShell并重新打开! 否则会�
 
 <br/>
 
----
 ## 查看插件log
 
 1. 通过SKSE加载进入游戏后，`MyFirstPlugin.dll`的log便会输出到  
