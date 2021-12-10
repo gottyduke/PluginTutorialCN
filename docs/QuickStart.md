@@ -1,9 +1,10 @@
 <h1 align="center">快速入门</h1>
 <p align="center"><a href="./README.md">回到目录</a> | <a href="./docs/setup/Setup.md">工具配置</a> | <a href="./docs/setup/Script.md">脚本说明</a> | <a href="./docs/tounknown/FuncHook.md">函数hook</a> | <a href="./docs/tounknown/MemPatch.md">内存补丁</a> | <a href="./docs/QuickStart.md">快速入门</a></p>
+<br/>
 
 本教程将会指引你以最简短的操作步骤编译出一个可在 _上古卷轴5 AE - 1.6.xx_ 版本的游戏中运行的**SKSE插件**.  
 参照此教程进行操作之前, 请先确保已按照[开发环境](/docs/setup/Setup.md)文档中的要求安装配置好所需的前置开发环境.
-<br/><br/>
+<br/>
 
 ---  
 ## 安装开发项目库
