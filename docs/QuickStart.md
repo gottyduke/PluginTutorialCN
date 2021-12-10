@@ -81,7 +81,7 @@ __完成上面的操作后, 请务必关闭PowerShell并重新打开! 否则会�
     ![NewPluginPath](/images/quickstart/11.png)   
 <br/>   
 
-> 关于`!MakeNew`脚本的具体使用说明可以查阅[脚本说明](/docs/setup/Script.md).
+3. 关于`!MakeNew`脚本的具体使用说明可以查阅[脚本说明](/docs/setup/Script.md).
 
 ---
 ## 生成工程项目
@@ -99,7 +99,7 @@ __完成上面的操作后, 请务必关闭PowerShell并重新打开! 否则会�
    ![ProjectSolution](/images/quickstart/13.png)
 <br/>
 
-> 关于`!Rebuild`脚本的具体使用说明可以查阅[脚本说明](/docs/setup/Script.md).
+3. 关于`!Rebuild`脚本的具体使用说明可以查阅[脚本说明](/docs/setup/Script.md).
 
 ---
 ## 编译DLL插件
@@ -122,6 +122,21 @@ __完成上面的操作后, 请务必关闭PowerShell并重新打开! 否则会�
 <br/>
 
 4. 若未设置MO2文件路径, 则`MyFirstPlugin.dll`会被拷贝到AE版游戏根目录下的"`Data\SKSE\Plugins`"路径下.
+
+---
+
+<br/>
+
+---
+## 查看插件log
+
+1. 通过SKSE加载进入游戏后，`MyFirstPlugin.dll`的log便会输出到  
+"`C:\Users\Administrator\Documents\My Games\Skyrim Special Edition\SKSE\MyFirstPlugin.log"`文件中。  
+
+2. 若看到"MyFirstPlugin v1.0.0 loaded"消息则代表插件已经加载成功！  
+
+     ![PluginLog](/images/quickstart/17.png)
+
 
 ---
 <p align="center"><a href="./README.md">回到目录</a> | <a href="./docs/setup/Setup.md">工具配置</a> | <a href="./docs/setup/Script.md">脚本说明</a> | <a href="./docs/tounknown/FuncHook.md">函数hook</a> | <a href="./docs/tounknown/MemPatch.md">内存补丁</a> | <a href="./docs/QuickStart.md">快速入门</a></p>
