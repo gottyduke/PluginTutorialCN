@@ -4,15 +4,14 @@
 示例工作项目包含三个常用脚本辅助开发, `!Rebuild`, `!MakeNew`, 和`!Update`.  
 
 ---
-+ ## `!Rebuild <编译库|BOOTSTRAP> <游戏版本> [自定义CLib]`
-用于重新生成整个解决方案.  
++ ## `!Rebuild <编译库|BOOTSTRAP> <游戏版本> [-CustomCLib] [-WhatIf]`
+用于生成整个解决方案.  
 参数 | 说明
 --- | ---
 `BOOTSTRAP` | 设置相应的系统环境变量以及工具链.
 `编译库` | `MT`(静态编译`MultiThreaded`)或`MD`(动态编译`MultiThreadedDLL`), 使用的`vcpkg`为`x64-windows-static`或`x64-windows-static-md`. 无特殊需求建议使用`MT`参数.
 `游戏版本` | `AE`(天际年度版, `1.6.xxx`)或`SE`(天际特别版, `1.5.97`).
-`自定义CLib` | 可选参数`0`, 启用自定义CLib代替默认的CLib作为开发库. 不使用自定义CLib时无视此选项.  
-`无参数` | 同步对项目做出的更改(添加/删除文件等). 更新VS项目`ZERO_CHECK`.  
+`CustomCLib` | 启用自定义CLib代替默认的CLib作为开发库.  
 
 ---
 + ## `!MakeNew <项目名称> [-install: mod名称] [-message: 项目说明] [-vcpkg: 额外依赖项]`  

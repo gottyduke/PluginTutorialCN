@@ -93,15 +93,13 @@ cd .\SKSEPlugins
 这样便新建了一个插件项目`MyNewPlugin`, 该项目的mod名称为`My New Mod`, 简易说明为`Demo Plugin :)`, 额外的依赖项为`boost-stl-interfaces`和`spdlog`.  
 > `!MakeNew`命令生成的插件项目非常基础, 需要根据插件作者自身需求对`CMakeLists.txt`和`vcpkg.json`进行进一步的修改.  
 
-+ ### 添加/删除文件
-在插件项目内`src`文件夹内新建文件/复制文件后, 或者在`include`文件夹内添加外部文件后, 打开`PowerShell`或常用的命令行终端, 重定向`SKSEPlugins`目录内, 运行`.\!Rebuild`(无参数)并在VS内编译项目`ZERO_CHECK`. 更新项目文件完成后根据提示重新加载解决方案即可使用新添加的文件.  
-> 不要在VS内手动添加文件.  
-> `ZERO_CHECK`用于在VS内同步应用于`CMakeLists.txt`的更新.  
-> 使用`CMake`管理插件项目初期可能会使习惯于直接编译项目的插件作者感到很不适应, 但外部编译(out-of-source build)将开发编译期产生的繁杂文件和纯净的插件项目源文件分离, 有助于后期的管理和拓展.  
++ ### 添加/删除文件  
+在VS内正常右键新建文件即可, 新文件将会立即可用. 第一次编译后检测到的新文件会自动转移至该项目的根目录, 并在第二次编译后自动更新项目文件, 此时按照VS提示重新加载项目即可. 这两次编译并不需要立即接连执行, 对文件做出的所有更改在转移前, 两次编译之间, 编译后, 重新加载后都会保留.  
 > `!Update`脚本目前支持自动添加至CMake源文件表的文件类别为: `*.c` `*.cpp` `*.cxx` `*.h` `*.hpp` `*.hxx`
+![QuickAdd](/images/setup/quick_add.png)
 
 + ### 自定义CLib
-`!Rebuild`命令生成时使用[默认CommonLib](https://github.com/Ryan-rsm-McKenzie/CommonLibSSE). 若要使用自定义CommonLib, 在`BOOTSTRAP`步骤中设置合适的自定义CommonLib环境并在`!Rebuild`命令后附加数字参数`0`以启用自定义CommonLib. 
+`!Rebuild`命令生成时使用[默认CommonLib](https://github.com/Ryan-rsm-McKenzie/CommonLibSSE). 若要使用自定义CommonLib, 在`BOOTSTRAP`步骤中设置合适的自定义CommonLib环境并在`!Rebuild`命令启用参数`-CustomCLib`以启用自定义CommonLib. 
 > 使用自定义CommonLib时, `!Rebuild`命令默认该自定义CommonLib符合当前编译目标(`AE`或`SE`)
 
 ---
