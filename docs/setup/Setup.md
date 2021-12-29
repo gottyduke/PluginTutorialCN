@@ -1,7 +1,6 @@
 <h1 align="center">工具配置</h1>
-<p align="center"><a href="./README.md">回到目录</a> | <a href="./docs/setup/Setup.md">工具配置</a> | <a href="./docs/setup/Script.md">脚本说明</a> | <a href="./docs/tounknown/FuncHook.md">函数hook</a> | <a href="./docs/tounknown/MemPatch.md">内存补丁</a> | <a href="./docs/QuickStart.md">快速入门</a></p>
+<p align="center"><a href="/docs/README.md">回到目录</a> | <a href="/docs/setup/Setup.md">工具配置</a> | <a href="/docs/setup/Script.md">脚本说明</a> | <a href="/docs/setup/QuickStart.md">快速入门</a> | <a href="/docs/tounknown/MemPatch.md">内存补丁</a> | <a href="/docs/tounknown/FuncHook.md">函数Hook</a></p>
 
----
 <h2 align="center">前置</h2>
 
 + ### 必需
@@ -61,7 +60,7 @@
 ---
 <h2 align="center">示例项目</h2>
 
-> [MaxSu的快速入门指南](/docs/QuickStart.md)
+[Maxsu的快速入门指南](/docs/QuickStart.md)
 
 + ### BOOTSTRAP
 **首次**设立工作项目需要以**管理员权限**打开`PowerShell`, 重定向至合适的工作目录, 运行以下命令:  
@@ -98,9 +97,19 @@ cd .\SKSEPlugins
 > `!Update`脚本目前支持自动添加至CMake源文件表的文件类别为: `*.c` `*.cpp` `*.cxx` `*.h` `*.hpp` `*.hxx`
 ![QuickAdd](/images/setup/quick_add.png)
 
++ ### SE/AE代码分离
+在代码内由预处理宏`ANNIVERSARY_EDITION`分离的代码会在根据当前编译目标自动切换.  
+```C++
+#if ANNIVERSARY_EDITION
+// Do AE stuff
+#else
+// Do SE stuff
+#endif
+```
+
 + ### 自定义CLib
 `!Rebuild`命令生成时使用[默认CommonLib](https://github.com/Ryan-rsm-McKenzie/CommonLibSSE). 若要使用自定义CommonLib, 在`BOOTSTRAP`步骤中设置合适的自定义CommonLib环境并在`!Rebuild`命令启用参数`-CustomCLib`以启用自定义CommonLib. 
 > 使用自定义CommonLib时, `!Rebuild`命令默认该自定义CommonLib符合当前编译目标(`AE`或`SE`)
 
 ---
-<p align="center"><a href="./README.md">回到目录</a> | <a href="./docs/setup/Setup.md">工具配置</a> | <a href="./docs/setup/Script.md">脚本说明</a> | <a href="./docs/tounknown/FuncHook.md">函数hook</a> | <a href="./docs/tounknown/MemPatch.md">内存补丁</a> | <a href="./docs/QuickStart.md">快速入门</a></p>
+<p align="center"><a href="/docs/README.md">回到目录</a> | <a href="/docs/setup/Setup.md">工具配置</a> | <a href="/docs/setup/Script.md">脚本说明</a> | <a href="/docs/setup/QuickStart.md">快速入门</a> | <a href="/docs/tounknown/MemPatch.md">内存补丁</a> | <a href="/docs/tounknown/FuncHook.md">函数Hook</a></p>
