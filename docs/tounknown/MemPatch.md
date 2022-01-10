@@ -28,7 +28,7 @@
 
 ## 实战案例
 
-### [You Can Sleep - 解除休息/等待限制(特别版)](/docs/tounknown/YCS.md) &#10007; 施工中
+### [You Can Sleep - 解除休息/等待限制(特别版)](/docs/tounknown/YCS.md) &#10003;
 难度: &#9733;  
 
 ### [No Enchantment Restriction - 解除附魔限制(年度版)](/docs/tounknown/NERR.md) &#10003;

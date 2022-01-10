@@ -31,32 +31,30 @@
 ```assembly
 cmp dword ptr [r8 + rcx * 8 + 10], 0
 ```
-这条指令将perk状态值与`0`进行比较(`cmp`, compare), C++代码为`if((r8+rcx*8+10) == 0)`.  
+这条指令将perk状态值与`0`进行比较(`cmp`, compare), C++代码为`if(*(r8+rcx*8+10) == 0)`.  
 
 第二条指令`7FF79BF2A6FA`:
 ```assembly
 mov eax, [r8 + rcx * 8 + 10]
 ```
-这条指令将perk状态值移入了`eax`寄存器(`mov`, move), 双击打开这条指令发现后面是`test eax, eax`, C++代码为`if(auto eax = (r8+rcx*8+10);eax)`.  
+这条指令将perk状态值拷贝至`eax`寄存器(`mov`, move), 双击打开这条指令发现后面是`test eax, eax`, C++代码为`if(bool eax = *(r8+rcx*8+10);eax)`.  
 
 将这两条指令的地址记录下来后关闭CE, 下一步更细致的反编译交给x64dbg.  
 
-> 教程的上下文图里地址可能有差异, 因为教程是分开编写的, 每次获取的地址不一样.  
+> 教程的图里地址可能有差异, 因为每次运行时获取的地址可能不一样.  
 > perk状态值并非内存中的perk对象.  
 > `dword ptr`限定从内存地址`r8 + rcx * 8 + 10`读取的数据大小为`DWORD`(32位双字).  
 
 ## 2.1 断点调试
 
-在汇编中, 函数体作为子程序(subroutine)存在于内存里, 通过`call`返程跳转指令调用. 调用者(caller)会先将返程地址入栈再跳转到子程序, 而被调用者(callee)执行完毕后则通过返程指令`ret`返回至栈上储存的地址并将其出栈. 通过返程地址可以找到调用者(caller).  
-
-附加x64dbg至游戏进程上, 转到第一条指令的地址`7FF79BF2A6B1`, 为其打上软件断点.  
+附加x64dbg至游戏进程上, 转到第一条指令的地址`7FF79BF2A6B1`.  
 ![dbg_nerr_boolcheck](/images/toukn/nerr/dbg_boolcheck.png)  
 这个函数加载了第一个参数的第一个成员, 对该成员的成员(偏移量`0x288`)进行null检查并比较第二个参数是否是字符串结尾`\0`, 然后对该成员+偏移量`0x190`进行null检查并返程. 我们将它命名为`sub_check198`.  
 
 因为这个函数内并不包含堆栈帧(stack frame), 因此栈顶就是返程地址:  
 ![dbg_nerr_ret](/images/toukn/nerr/dbg_ret.png)  
 
-取消刚才的断点并恢复游戏运行后, 转到返程地址`7FF79BEA1CC5`:  
+转到返程地址`7FF79BEA1CC5`:  
 ![dbg_nerr_caller](/images/toukn/nerr/dbg_caller.png)  
 在`call`指令后`test al, al`是返回值null检查. 这个函数将第一个参数的成员(偏移量`0xF0`)传递给函数`sub_check198`后对返回值进行null检查并返程. 我们将它命名为`sub_check288`.  
 > 也可以手动步进跟随指令返程而不直接跳转到返程地址.  
@@ -65,33 +63,33 @@ mov eax, [r8 + rcx * 8 + 10]
 ![dbg_nerr_2ndcaller](/images/toukn/nerr/dbg_2ndcaller.png)  
 挺长的一个函数, 截屏都没有截完整. 由于返程在这个函数主体的中间部分, 因此我们在其头部`test rdx, rdx`打上断点并进入游戏测试. 这里可以吃惊(吃惊吗?)的发现在没有打开附魔台时, 这个断点就被立刻触发了, 说明这个函数也不是加载附魔台的主函数, 仅仅是其中的一个调用.  
 
-根据CE查找到的引用信息, 附魔台打开时只调用了一次perk状态值, 而此处的函数明显是在游戏循环里反复调用(继续运行会立刻触发下一次断点), 结合我们的上一个函数`sub_check288`的返回值经常变化(说明参数经常变化), 可以合理猜想这是用于循环检测玩家是否有perk(常见于Papyrus脚本中). 我们为它命名为`sub_checkPerk`.  
+根据CE查找到的引用信息, 附魔台打开时只调用了一次perk状态值, 而此处的函数明显是在游戏循环里反复调用(继续运行会立刻击中下一次断点), 结合我们的上一个函数`sub_check288`的返回值经常变化(说明参数经常变化), 可以合理猜想这是用于循环检测玩家是否有perk(常见于Papyrus脚本中). 我们为它命名为`sub_checkPerk`.  
 
 ## 2.2. 断点调试
 
-已经知道函数`sub_checkPerk`是处于一个循环中, 那我们就无法在打软件断点后返回游戏打开附魔台了, 因为断点会立刻触发. 这里就需要设置一个硬件断点, 当函数`sub_check198`的参数为我们想要的`ExtraEffect`时, 触发断点. 
+已经知道函数`sub_checkPerk`是处于一个循环中, 那我们就无法在设置软件断点后返回游戏打开附魔台了, 因为断点会立刻击中. 这里就需要设置一个硬件断点, 当函数`sub_check198`的参数为我们想要的`ExtraEffect`时, 挂起程序. 
 
-在x64dbg的内存视图中转到perk状态值的地址, 并为其打上硬件断点, 因为函数`sub_check198`调用这个地址时是`dword`, 因此硬件断点的条件也为读取dword(32位整型)时.  
+在x64dbg的内存视图中转到perk状态值的地址, 并为其设置硬件断点, 因为函数`sub_check198`调用这个地址时是`dword`, 因此硬件断点的条件也为读取dword(32位双字)时.  
 ![dbg_nerr_hardbp](/images/toukn/nerr/dbg_hardbp.png)  
-恢复游戏运行后在游戏内打开附魔台, 触发了硬件断点后再次回到x64dbg.  
+恢复游戏运行后在游戏内打开附魔台, 击中了硬件断点后再次回到x64dbg.  
 
 一直步进到函数`sub_checkPerk`, 因为明确知道这个函数只是附魔台加载函数中的一个调用, 所以我们可以执行至返程指令`ret`前. 再次步进后可以看见我们来到了一个非常大的调用者函数(假装没看见我的注释):  
 ![dbg_nerr_loadmain_src](/images/toukn/nerr/dbg_loadmain_src.png)  
 看见x64dbg已经把此时各个寄存器的值给解析了出来, 其中附魔相关的字符串`Enchanting`, `Choose an item to destroy ...`都证明了这就算不是附魔台加载的主函数, 也是附魔台相关的调用.  
 
-从函数`sub_checkPerk(ExtraEffect)`返程后, 我们看见了许多和浮点相关的指令, 从`movss xmm1, [rbp+588]`开始, 到`cvttss2si rax, xmm0`结束. 这一串指令用于浮点数整型转换. 结合游戏Form中perk附加的数值都是浮点数来看, 这一段指令的意义就不言而喻了: 调用函数`sub_checkPerk(ExtraEffect)`检测玩家是否有`ExtraEffect`perk, 根据返回值加载perk数值的浮点数, 将浮点数整型转换并移入`rax`寄存器用于后面的调用.  
+从函数`sub_checkPerk(ExtraEffect)`返程后, 我们看见了许多和浮点相关的指令, 从`movss xmm1, [rbp+588]`开始, 到`cvttss2si rax, xmm0`结束. 这一串指令用于浮点数整型转换. 结合游戏Form中perk附加的数值都是浮点数来看, 这一段指令的意义就不言而喻了: 调用函数`sub_checkPerk(ExtraEffect)`检测玩家是否有`ExtraEffect`perk, 根据返回值加载perk数值的浮点数, 将浮点数整型转换并拷贝至`rax`寄存器用于后面的调用.  
 
-浮点数整型转换并移入`rax`寄存器后面的指令就和perk无关了: `rax`中的整型值被移入`r14`, 一个用于构建UI的字符串指针被移入`rax`后再移入一个本地变量等UI相关的操作. 此时我们已经找到了内存补丁的目标: 从函数`sub_checkPerk`返回后将我们想要的值移入`rax`寄存器.  
+这后面的指令就和perk无关了: `rax`中的整型值被拷贝至`r14`, 一个用于构建UI的字符串指针被拷贝至`rax`后再移入一个本地变量等UI相关的操作. 此时我们已经找到了内存补丁的目标: 从函数`sub_checkPerk`返回后将我们想要的值拷贝至`rax`寄存器.  
 
 ## 3. 内存补丁
 
-既然我们的目标是将想要的值移入`rax`寄存器, 那么这一片浮点数整型转换的操作就不需要了. 在x64dbg中选中这一片内存, 将其以无操作指令`NOP`填充:  
+既然我们的目标是将想要的值拷贝至`rax`寄存器, 那么这一片浮点数整型转换的操作就不需要了. 在x64dbg中选中这一片内存, 将其以无操作指令`NOP`填充:  
 ![dbg_nerr_nops](/images/toukn/nerr/dbg_nops.png)  
 
 选中第一个`NOP`, 按下空格键输入汇编`mov eax, 5`后恢复游戏运行:  
 ![nerr_done](/images/toukn/nerr/re_done.png)  
 就是这样简单的一个汇编指令, 我们就改变了游戏允许的最大附魔数量 - 无论有无`ExtraEffect`perk, 无论这个perk被魔改成什么样.  
-> 这里用`eax`而不是`rax`因为我们的值是32位常量, 所以将目的寄存器也限定为32位.  
+> 这里用`eax`而不是`rax`因为我们的值是32位常量, 所以目的寄存器也限定为32位.  
 
 ## 4. SKSE
 
@@ -107,6 +105,8 @@ x64dbg中双击函数头部的地址切换为偏移量模式, 并回到我们编
 
 C++代码:  
 ```C++
+#include "DKUtil/Hook.hpp"
+
 using namespace DKUtil::Alias;
 
 // 1-6-323: 0x894EE0 + 0x212

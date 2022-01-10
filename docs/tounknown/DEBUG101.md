@@ -1,7 +1,5 @@
-<h1 align="center">内存补丁</h1>  
+<h1 align="center">调试101</h1>  
 <p align="center"><a href="/docs/README.md">回到目录</a> | <a href="/docs/setup/Setup.md">工具配置</a> | <a href="/docs/setup/Script.md">脚本说明</a> | <a href="/docs/setup/QuickStart.md">快速入门</a> | <a href="/docs/tounknown/MemPatch.md">内存补丁</a> | <a href="/docs/tounknown/FuncHook.md">函数Hook</a></p>
-
-# 调试101
 
 本节教程简单讲一下使用x64dbg进行调试(debug)的知识.  
 
@@ -20,6 +18,8 @@
 
 当断点被击中后, 我们便可以逐步调试程序, 分析每一步指令的作用, 观察寄存器和rflag的数值变化.  
 
+在汇编中, 函数体作为子程序(subroutine)存在于内存里, 通过`call`返程跳转指令调用. 调用者(caller)会先将返程地址入栈再跳转到子程序, 而被调用者(callee)执行完毕后则通过返程指令`ret`返回至栈上储存的地址并将其出栈. 通过返程地址可以找到调用者(caller).  
+
 类型 | 快捷键 | 作用
 --- | --- | ---
 运行至选区(Run till selection) | `F4` | 执行至当前选中的地址.
@@ -30,7 +30,6 @@
 
 x64dbg默认启用TLS回调函数的断点, 我们需要将它禁用掉.  
 ![debug101_dbg_tls](/images/toukn/debug101_dbg_tls.png)
-
 
 ---
 <p align="center"><a href="/docs/README.md">回到目录</a> | <a href="/docs/setup/Setup.md">工具配置</a> | <a href="/docs/setup/Script.md">脚本说明</a> | <a href="/docs/setup/QuickStart.md">快速入门</a> | <a href="/docs/tounknown/MemPatch.md">内存补丁</a> | <a href="/docs/tounknown/FuncHook.md">函数Hook</a></p>
