@@ -17,6 +17,7 @@ for 上古卷轴5: 天际 (SKSE64) - 持续施工中
     - [脚本Repo](https://github.com/gottyduke/SKSEPlugins) 
 
 ### 1. 游戏资源
+- [插件基础](/docs/resources/Plugin.md) &#10003;
 - [事件响应](/docs/resources/Events.md) &#10007;
 - [Papyrus调用](/docs/resources/Papyrus.md) &#10007;
 
@@ -33,4 +34,4 @@ for 上古卷轴5: 天际 (SKSE64) - 持续施工中
 感谢Maxsu的无数次测试和帮助.
 
 ---
-<p align="center">作者: Dropkicker & Maxsu @ 2021</p>
+<p align="center">作者: Dropkicker & Maxsu @ 2022</p>
