@@ -3,6 +3,8 @@ for 上古卷轴5: 天际 (SKSE64) - 持续施工中
 
 希望能够帮助到对SKSE64插件开发感兴趣的朋友.  
 
+此教程更新时游戏版本为: *SE 1.5.97*, *AE 1.6.640*, *SKSE 2.2.2*, *CommonLibSSE-NG 3.5.2*
+
 > 欢迎PR任何的更改建议, 意见或疑惑.  
 > 联系作者? 先善用网络工具搜索, 疑难杂症可以加入QQ群, 群号`0x215249EF`.  
 
@@ -18,8 +20,8 @@ for 上古卷轴5: 天际 (SKSE64) - 持续施工中
 
 ### 1. 游戏资源
 - [插件基础](/docs/resources/Plugin.md) &#10003;
-- [事件响应](/docs/resources/Events.md) &#10007;
-- [Papyrus调用](/docs/resources/Papyrus.md) &#10007;
+- [事件响应](/docs/resources/Events.md) &#10003;
+- [Papyrus调用](/docs/resources/Papyrus.md) &#10003;
 
 ### 2. 探索未知
 - [内存补丁](/docs/tounknown/MemPatch.md) &#10003;

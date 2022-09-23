@@ -1,5 +1,5 @@
 <h1 align="center">工具配置</h1>
-<p align="center"><a href="/README.md">回到目录</a> | <a href="/docs/setup/Setup.md">工具配置</a> | <a href="/docs/setup/Script.md">脚本说明</a> | <a href="/docs/setup/QuickStart.md">快速入门</a> | <a href="/docs/tounknown/MemPatch.md">内存补丁</a> | <a href="/docs/tounknown/FuncHook.md">函数Hook</a></p>
+<p align="center"><a href=<p align="center"><a href="/README.md">回到目录</a> | <a href="/docs/setup/Setup.md">工具配置</a> | <a href="/docs/setup/Script.md">脚本说明</a> | <a href="/docs/setup/QuickStart.md">快速入门</a> | <a href="/docs/resources/Plugin.md">插件基础</a> | <a href="/docs/resources/Papyrus.md">Papyrus调用</a> | <a href="/docs/resources/Events.md">事件响应</a> | <a href="/docs/tounknown/MemPatch.md">内存补丁</a> | <a href="/docs/tounknown/FuncHook.md">函数Hook</a></p></p>
 
 <h2 align="center">前置</h2>
 
@@ -8,8 +8,8 @@
     + [Git](https://git-scm.com)
     + [vcpkg](https://github.com/microsoft/vcpkg/releases)
     + [Visual Studio 17 2022](https://visualstudio.microsoft.com)
-    + [上古卷轴5: 天际特别版 1.5.97](https://store.steampowered.com/app/489830/The_Elder_Scrolls_V_Skyrim_Special_Edition)
-    + [上古卷轴5: 天际年度版 1.6.xxx](https://store.steampowered.com/app/489830/The_Elder_Scrolls_V_Skyrim_Special_Edition)
+    + [上古卷轴5: 天际特别版 SE 1.5.3 ~ 1.5.97](https://store.steampowered.com/app/489830/The_Elder_Scrolls_V_Skyrim_Special_Edition)
+    + [上古卷轴5: 天际周年版 AE 1.6.317+](https://store.steampowered.com/app/489830/The_Elder_Scrolls_V_Skyrim_Special_Edition)
 
 本教程会使用CMake管理插件项目，并用Visual Studio 2022进行开发和编译.
 
@@ -66,7 +66,7 @@
 + ### CommonLibSSE
 简称`CLib`, `CommonLib`, 是代替SKSE的插件开发库, 内容极为丰富, 实用性高, 并且社区一直进行维护和更新.  
 当前社区主流的有Ryan开发的`CommonLibSSE`(原作者), po3更新的`CommonLibSSE`(维护者), maxsu更新的`CommonLibSSE`(维护者).  
-除Ryan的`CLib`库外, 其他提到的库都支持`NG`构建. `NG`则是`Next-Generation`的缩写, 由CharmedBayron在po3的`CLib`库基础上升级出的可同时支持AE/SE/VR版的多目标运行环境.  
+除Ryan的`CLib`库外, 其他提到的库都支持`NG`构建. `NG`则是`Next-Generation`的缩写, 由CharmedBaryon在po3的`CLib`库基础上升级出的可同时支持AE/SE/VR版的多目标运行环境.  
 
 
 + ### BOOTSTRAP
@@ -77,6 +77,7 @@ Set-ExecutionPolicy Bypass -Scope Process
 cd .\SKSEPlugins
 .\!Rebuild -Bootstrap
 ```  
+![win_terminal.png](/images/setup/win_terminal.png)  
 在此过程中根据提示完善工程项目相关信息.  
 运行完成后**重启**`PowerShell`或常用的命令行终端.  
 > `Bypass`执行策略仅应用于当前终端, 不必担心电脑安全.  
@@ -99,7 +100,7 @@ cd .\SKSEPlugins
 ```powershell
 .\!Rebuild All
 ```
-这样便生成了一个解决方案, 该方案的运行环境支持AE版+SE版+VR版, 使用的`CommonLib`为[CharmedBayron的默认CLib-NG](https://github.com/CharmedBaryon/CommonLibSSE-NG).  
+这样便生成了一个解决方案, 该方案的运行环境支持AE版+SE版+VR版, 使用的`CommonLib`为[CharmedBaryon的默认CLib-NG](https://github.com/CharmedBaryon/CommonLibSSE-NG).  
 
 生成一个全版本支持+自定义`CLib`的解决方案, 同时启用`DKUtil`的测试工具:  
 `.\!Rebuild -C -DBG DKUtil`  
@@ -125,7 +126,7 @@ if (REL::Module::IsAE()) {
 ```
 
 + ### 自定义CLib
-`!Rebuild`命令生成时使用[CharmedBayron的默认CLib-NG](https://github.com/CharmedBaryon/CommonLibSSE-NG). 若要使用自定义CommonLib, 在`BOOTSTRAP`步骤中设置合适的自定义CommonLib环境并在`!Rebuild`命令启用参数`-C`或`-Custom`以启用自定义CommonLib.  
+`!Rebuild`命令生成时使用[CharmedBaryon的默认CLib-NG](https://github.com/CharmedBaryon/CommonLibSSE-NG). 若要使用自定义CommonLib, 在`BOOTSTRAP`步骤中设置合适的自定义CommonLib环境并在`!Rebuild`命令启用参数`-C`或`-Custom`以启用自定义CommonLib.  
 
 ---
-<p align="center"><a href="/README.md">回到目录</a> | <a href="/docs/setup/Setup.md">工具配置</a> | <a href="/docs/setup/Script.md">脚本说明</a> | <a href="/docs/setup/QuickStart.md">快速入门</a> | <a href="/docs/tounknown/MemPatch.md">内存补丁</a> | <a href="/docs/tounknown/FuncHook.md">函数Hook</a></p>
+<p align="center"><a href=<p align="center"><a href="/README.md">回到目录</a> | <a href="/docs/setup/Setup.md">工具配置</a> | <a href="/docs/setup/Script.md">脚本说明</a> | <a href="/docs/setup/QuickStart.md">快速入门</a> | <a href="/docs/resources/Plugin.md">插件基础</a> | <a href="/docs/resources/Papyrus.md">Papyrus调用</a> | <a href="/docs/resources/Events.md">事件响应</a> | <a href="/docs/tounknown/MemPatch.md">内存补丁</a> | <a href="/docs/tounknown/FuncHook.md">函数Hook</a></p></p>
